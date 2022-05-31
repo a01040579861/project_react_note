@@ -1,23 +1,21 @@
 // myboard.js
 import { db } from "../../firebase";
-import {
-  collection,
-  doc,
-  getDoc,
-  getDocs,
-  addDoc,
-  updateDoc,
-  deleteDoc,
-} from "firebase/firestore";
+import { collection, doc, getDoc, getDocs, addDoc, updateDoc, deleteDoc } from "firebase/firestore";
 
 // Actions
 const LOAD = "myboard/LOAD";
 const CREATE = "myboard/CREATE";
 const UPDATE = "myboard/UPDATE";
-const REMOVE = "myboard/REMOVE";
+const DELETE = "myboard/DELETE";
 
 const initailState = {
-  list: [],
+  list: [
+    // {
+    //   word: "竝",
+    //   desc: "나란히 병, 곁 방, 땅 이름 반",
+    //   exam: "병,방,반",
+    // },
+  ],
 };
 
 // Action Creators
@@ -33,8 +31,8 @@ export function updateCard(card_data) {
   return { type: UPDATE, card_data };
 }
 
-export function removeCard(card_index) {
-  return { type: REMOVE, card_index };
+export function deleteCard(card_index) {
+  return { type: DELETE, card_index };
 }
 
 //load
@@ -44,7 +42,6 @@ export const loadCardFB = () => {
 
     let card_list = [];
     card_data.forEach((doc) => {
-      console.log(doc.data());
       card_list.push({ id: doc.id, ...doc.data() });
     });
 
@@ -72,18 +69,15 @@ export const updateCardFB = (card_id, card_list) => {
   };
 };
 
-//REMOVE
-export const removeCardFB = (card_id) => {
+//DELETE
+export const deleteCardFB = (card_id) => {
   return async function (dispatch, getState) {
     if (!card_id) {
       return;
     }
     const docRef = doc(db, "word", card_id);
     await deleteDoc(docRef);
-    const _card_list = getState().myboard.list;
-    const card_index = _card_list.findIndex((b) => {
-      return b.id === card_id;
-    });
+    const card_list = getState().myboard.list;
 
     dispatch(loadCardFB());
   };
@@ -106,8 +100,7 @@ export default function reducer(state = initailState, action = {}) {
       return { list: new_card_list };
     }
 
-    case "myboard/REMOVE": {
-      console.log(action);
+    case "myboard/DELETE": {
       const new_card_list = state.list.filter((l, idx) => {
         return parseInt(action.card_index) !== idx;
       });

@@ -1,7 +1,6 @@
 import React from "react";
 import styled from "styled-components";
 import { useDispatch } from "react-redux";
-import { createCard } from "./redux/modules/myboard";
 import { useHistory } from "react-router-dom";
 import { createCardFB } from "./redux/modules/myboard";
 

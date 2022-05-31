@@ -2,7 +2,7 @@ import React from "react";
 import styled from "styled-components";
 import { useHistory } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
-import { removeCardFB, loadCardFB } from "./redux/modules/myboard";
+import { deleteCardFB, loadCardFB } from "./redux/modules/myboard";
 
 function Board(props) {
   const history = useHistory();
@@ -35,7 +35,7 @@ function Board(props) {
                     </Edit_btn>
                     <Del_btn
                       onClick={() => {
-                        dispatch(removeCardFB(my_list[idx].id));
+                        dispatch(deleteCardFB(my_list[idx].id));
                       }}
                     >
                       🗑️

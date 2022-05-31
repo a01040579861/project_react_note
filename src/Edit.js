@@ -2,7 +2,7 @@ import React from "react";
 import styled from "styled-components";
 import { useParams, useHistory } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { updateCard, updateCardFB } from "./redux/modules/myboard";
+import { updateCardFB } from "./redux/modules/myboard";
 
 function Edit(props) {
   const card_list = useSelector((state) => state.myboard.list);
