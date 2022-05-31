@@ -35,7 +35,7 @@ export function deleteCard(card_index) {
   return { type: DELETE, card_index };
 }
 
-//load
+//LOAD
 export const loadCardFB = () => {
   return async function (dispatch) {
     const card_data = await getDocs(collection(db, "word"));
