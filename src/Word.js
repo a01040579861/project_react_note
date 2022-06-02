@@ -8,9 +8,9 @@ function Word(props) {
   const dispatch = useDispatch();
   const history = useHistory();
 
-  const input_word = React.useRef(null);
-  const input_desc = React.useRef(null);
-  const input_exam = React.useRef(null);
+  const input_word = React.useRef(null);//단어
+  const input_desc = React.useRef(null);//설명
+  const input_exam = React.useRef(null);//예시
 
   const addWord = () => {
     let input_data = {
@@ -18,10 +18,15 @@ function Word(props) {
       desc: input_desc.current.value,
       exam: input_exam.current.value,
     };
+    //등록버튼 누르면 페이지 전환되고 데이터 저장
     dispatch(createCardFB(input_data));
     window.setTimeout(() => {
       history.push("/");
     }, 500);
+  };
+  
+  function back(props) {
+    history.push("/");
   };
 
   return (
@@ -45,6 +50,7 @@ function Word(props) {
             placeholder="단어를 사용한 예시" ref={input_exam}></Text>
         </div>
         <Add_btn onClick={addWord}>등록</Add_btn>
+        <Back_btn onClick={back}>뒤로가기</Back_btn>
       </Content>
     </Back>
   );
@@ -101,6 +107,28 @@ const Add_btn = styled.div`
     transition: 0.2s;
   }
   cursor: pointer;
+`;
+
+const Back_btn = styled.div`
+  background: #304FFE;
+  color: #fff;
+  width: 300px;
+  height: 40px;
+  line-height: 40px;
+  font-weight: bold;
+  border-radius: 20px;
+  display: block;
+  position: fixed;
+  bottom: 150px;
+  left: 50%;
+  transform: translateX(-50%);
+  cursor: pointer;
+
+  &:hover {
+    color: black;
+    background: #BBDEFB;
+    transition: 0.3s;
+  }
 `;
 
 export default Word;

@@ -10,7 +10,6 @@ function Edit(props) {
   const params = useParams();
   const history = useHistory();
   const card_index = params.idx;
-  console.log(card_list[card_index]);
 
   const word = React.useRef(null);
   const desc = React.useRef(null);
@@ -22,7 +21,12 @@ function Edit(props) {
       desc: desc.current.value,
       exam: exam.current.value,
     };
+    //수정버튼 누르면 페이지 전환되고 바뀐 데이터 저장
     dispatch(updateCardFB(card_list[card_index].id, input_data));
+    history.push("/");
+  };
+
+  function back(props) {
     history.push("/");
   };
 
@@ -45,6 +49,7 @@ function Edit(props) {
           <Text ref={exam}>{card_list[card_index].exam}</Text>
         </div>
         <Add_btn onClick={editWord}>수정</Add_btn>
+        <Back_btn onClick={back}>뒤로가기</Back_btn>
       </Content>
     </Back>
   );
@@ -80,6 +85,7 @@ const Label = styled.label`
 `;
 const Text = styled.textarea`
   width: 300px;
+  height: 50px;
   resize: none;
 `;
 const Add_btn = styled.div`
@@ -95,13 +101,35 @@ const Add_btn = styled.div`
   bottom: 80px;
   left: 50%;
   transform: translateX(-50%);
+  cursor: pointer;
   
   &:hover {
     color: black;
     background: #BBDEFB;
     transition: 0.3s;
   }
+`;
+
+const Back_btn = styled.div`
+  background: #304FFE;
+  color: #fff;
+  width: 300px;
+  height: 40px;
+  line-height: 40px;
+  font-weight: bold;
+  border-radius: 20px;
+  display: block;
+  position: fixed;
+  bottom: 150px;
+  left: 50%;
+  transform: translateX(-50%);
   cursor: pointer;
+
+  &:hover {
+    color: black;
+    background: #BBDEFB;
+    transition: 0.3s;
+  }
 `;
 
 export default Edit;

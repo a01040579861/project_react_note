@@ -52,6 +52,7 @@ function Board(props) {
                 <Span>예시</Span>
                 <Example>{l.exam}</Example>
               </div>
+
             </Section>
           );
         })}
