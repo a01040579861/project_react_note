@@ -8,7 +8,10 @@ function Board(props) {
   const history = useHistory();
   const dispatch = useDispatch();
   const my_list = useSelector((state) => state.myboard.list);
+  console.log(my_list);//메인에 있는 전체 글
 
+  // 강의에서는 클래스형으로 나타내어 DidMount에 파이어베이스 로드하는 부분이 들어가는데 함수형으로 나타내었으니 useEffect를 
+  // 사용하여 파이어베이스와 통신 >> 파이어베이스의 데이터 내용을 뷰에 로드하기 위한 작업 + [] 부분은 무한 루프를 막아준다.
   React.useEffect(() => {
     dispatch(loadCardFB());
   }, []);
@@ -19,6 +22,8 @@ function Board(props) {
         <h3>Dictionary📓</h3>
       </Head>
       <Content>
+        {/* list에서 map을 돌리는 이유는 파이어베이스 안의 
+        데이터를 리덕스에 저장해두었기 때문에 이 리덕스를 소환 */}
         {my_list.map((l, idx) => {
           return (
             <Section key={idx}>
@@ -28,6 +33,7 @@ function Board(props) {
                   <Edit_box>
                     <Edit_btn
                       onClick={() => {
+                        //수정은 맵으로 돌린 각 리스트의 인덱스값으로 불러와서 해당 인덱스의 id로 글을 판단하여 불러온다.
                         history.push("/edit/" + idx);
                       }}
                     >
@@ -35,6 +41,7 @@ function Board(props) {
                     </Edit_btn>
                     <Del_btn
                       onClick={() => {
+                        //삭제는 맵으로 돌린 각 리스트의 인덱스값으로 불러와서 해당 인덱스의 id로 글을 판단하여 삭제한다.
                         dispatch(deleteCardFB(my_list[idx].id));
                       }}
                     >
@@ -60,6 +67,7 @@ function Board(props) {
           <Add_btn
             onClick={() => {
               history.push("/word");
+              // 단어 등록 페이지로 이동
             }}
           >
             ✏️

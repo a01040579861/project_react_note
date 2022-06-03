@@ -9,13 +9,15 @@ function Edit(props) {
   const dispatch = useDispatch();
   const params = useParams();
   const history = useHistory();
-  const card_index = params.idx;
+  const card_index = params.idx; 
+  console.log(card_list[card_index]);//선택된 인덱스의 데이터 값 
 
   const word = React.useRef(null);
   const desc = React.useRef(null);
   const exam = React.useRef(null);
 
   const editWord = () => {
+    // 선택한 인풋 데이터의 값을 가지고 온다.
     let input_data = {
       word: word.current.value,
       desc: desc.current.value,
@@ -23,10 +25,6 @@ function Edit(props) {
     };
     //수정버튼 누르면 페이지 전환되고 바뀐 데이터 저장
     dispatch(updateCardFB(card_list[card_index].id, input_data));
-    history.push("/");
-  };
-
-  function back(props) {
     history.push("/");
   };
 
@@ -49,7 +47,6 @@ function Edit(props) {
           <Text ref={exam}>{card_list[card_index].exam}</Text>
         </div>
         <Add_btn onClick={editWord}>수정</Add_btn>
-        <Back_btn onClick={back}>뒤로가기</Back_btn>
       </Content>
     </Back>
   );
@@ -109,27 +106,4 @@ const Add_btn = styled.div`
     transition: 0.3s;
   }
 `;
-
-const Back_btn = styled.div`
-  background: #304FFE;
-  color: #fff;
-  width: 300px;
-  height: 40px;
-  line-height: 40px;
-  font-weight: bold;
-  border-radius: 20px;
-  display: block;
-  position: fixed;
-  bottom: 150px;
-  left: 50%;
-  transform: translateX(-50%);
-  cursor: pointer;
-
-  &:hover {
-    color: black;
-    background: #BBDEFB;
-    transition: 0.3s;
-  }
-`;
-
 export default Edit;

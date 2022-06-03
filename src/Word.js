@@ -7,12 +7,13 @@ import { createCardFB } from "./redux/modules/myboard";
 function Word(props) {
   const dispatch = useDispatch();
   const history = useHistory();
-
+  
   const input_word = React.useRef(null);//단어
   const input_desc = React.useRef(null);//설명
   const input_exam = React.useRef(null);//예시
 
   const addWord = () => {
+    //새롭게 입력된 인풋 데이터의 현재값 가지고 온다.
     let input_data = {
       word: input_word.current.value,
       desc: input_desc.current.value,
@@ -23,10 +24,6 @@ function Word(props) {
     window.setTimeout(() => {
       history.push("/");
     }, 500);
-  };
-  
-  function back(props) {
-    history.push("/");
   };
 
   return (
@@ -50,7 +47,6 @@ function Word(props) {
             placeholder="단어를 사용한 예시" ref={input_exam}></Text>
         </div>
         <Add_btn onClick={addWord}>등록</Add_btn>
-        <Back_btn onClick={back}>뒤로가기</Back_btn>
       </Content>
     </Back>
   );
@@ -108,27 +104,4 @@ const Add_btn = styled.div`
   }
   cursor: pointer;
 `;
-
-const Back_btn = styled.div`
-  background: #304FFE;
-  color: #fff;
-  width: 300px;
-  height: 40px;
-  line-height: 40px;
-  font-weight: bold;
-  border-radius: 20px;
-  display: block;
-  position: fixed;
-  bottom: 150px;
-  left: 50%;
-  transform: translateX(-50%);
-  cursor: pointer;
-
-  &:hover {
-    color: black;
-    background: #BBDEFB;
-    transition: 0.3s;
-  }
-`;
-
 export default Word;
